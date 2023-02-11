@@ -16,7 +16,9 @@ in the terminal to install the tkinter module
 
 Open the gui.py file and the sockServ.py file in your text editor/IDE
 
-run the gui.py file from the terminal - the gui window should pop up
+Run the gui.py file from the terminal by entering: python gui.py -- a GUI window should pop up
+
+Run the sockServ.py file from the terminal by entering: python sockServ.py
 
 Follow the prompts in the GUI to customize a quiz, take the quiz and receive a score. 
 
