@@ -25,18 +25,11 @@ class Quiz():
         self.options=[]
         self.i = 0
         self.clickedNumber = 0
-        
-        # holds value associated with integer variable (call self.radioSelect.get() to retreive value) CAN USE STRVAR too!
         self.userAnswer = StringVar(self.gameWindow)
         self.game(self.gameData)
         
     def game(self, data):
-        #frame=Frame(self.gameWindow, width=500, height=500)
-        #frame.pack(side="top", expand=True, fill="both")
-        #title for Gui
         self.gameWindow.title("Welcome to the Quiz")
-        #loop through data to create list of questions, wrong answers, right answers and all options
-        #if len(self.questions)== 0:
         for item in data:
             correctAnswer = item["correct_answer"]
             wrongAnswers= item["incorrect_answers"]
@@ -47,11 +40,6 @@ class Quiz():
             self.correctAnswers.append(strippedr)
             self.wrongAnswers.append(wrongAnswers)
             self.options.append(options)  
-        #if self.i < 5:
-            #questionLabel = Label(frame, text= self.questions[self.i]).pack()
-            #self.radioButtons(self.options[self.i], frame)
-            #self.i+=1
-            #self.game(data)
         self.next()
         self.gameWindow.mainloop()
       
@@ -60,7 +48,6 @@ class Quiz():
         frame.pack(side="top", expand=True, fill="both")
         if self.i < len(self.questions):
             self.correctAnswer = self.correctAnswers[self.i]
-            #print(self.correctAnswer)
             questionLabel = Label(frame, text= self.questions[self.i]).pack()
             self.radioButtons(self.options[self.i], frame)
             self.i+=1
@@ -68,27 +55,32 @@ class Quiz():
             frame.destroy()
             frame=Frame(self.gameWindow, width=500, height=500)
             frame.pack(side="top", expand=True, fill="both")
-            #print("Total Possible", self.totalPossible, "Score", self.score)
-            finalScore = (self.score/self.totalPossible)*100
-            questionLabel = Label(frame, text=f"Your Score is {finalScore}%").pack()
-            questionLabel = Label(frame, text="Thanks for Playing!").pack()
-            exitButton = Button(frame, text="Exit", command=self.gameWindow.destroy)
-            exitButton.pack()
-            
-        #self.next(frame)
+            self.microservice(frame)
+
+
+    def microservice(self, frame):
+        s = socket.socket()
+        host = 'localhost'
+        port = 8005
+        s.connect((host, port))
+        data = str(self.score)+"/"+str(self.totalPossible)
+        data = data.encode("utf8")
+        s.send(data)
+        ret = s.recv(1024).decode()
+        questionLabel = Label(frame, text=f"Your Score is {ret}%").pack()
+        questionLabel = Label(frame, text="Thanks for Playing!").pack()
+        exitButton = Button(frame, text="Exit", command=self.gameWindow.destroy)
+        exitButton.pack()
+        s.close()
             
     def cleanerHTML(self, str):
+        '''Method cleans up the HTML marks in JSON file'''
         CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
         return re.sub(CLEANR,"",str)
             
     def quizSubmit(self, value, frame):
-        #print("inputValue", value, "Correct Answer", self.correctAnswer)
-        #self.clickedNumber+=1
         if value == self.correctAnswer:
-            #print("you're right!")
             self.score+=1
-        #if self.clickedNumber > len(self.questions):
-            #self.tooManyAnswers()
         frame.destroy()
         self.next()
                          
@@ -208,4 +200,3 @@ exitButton.pack()
     
 # event loop for ui, loops gui
 window.mainloop()
-
