@@ -7,20 +7,20 @@ This app runs on tkinter the standard GUI library for python.
 
 # Instructions
 
-Make sure pip is installed:
+1. Make sure pip is installed:
 https://pip.pypa.io/en/stable/installation/
 
-Once pip is installed, run 
+2. Once pip is installed, run 
 <img width="107" alt="image" src="https://user-images.githubusercontent.com/71670898/218280538-2b95ad31-c7ec-496f-b0df-0135fda37d9e.png">
 in the terminal to install the tkinter module
 
-Open the gui.py file and the sockServ.py file in your text editor/IDE
+3. Open the gui.py file and the sockServ.py file in your text editor/IDE
 
-Run the gui.py file from the terminal by entering: python gui.py -- a GUI window should pop up
+4. Run the gui.py file from the terminal by entering: python gui.py -- a GUI window should pop up
 
-Run the sockServ.py file from the terminal by entering: python sockServ.py
+5. Run the sockServ.py file from the terminal by entering: python sockServ.py
 
-Follow the prompts in the GUI to customize a quiz, take the quiz and receive a score. 
+6. Follow the prompts in the GUI to customize a quiz, take the quiz and receive a score. 
 
 
 
